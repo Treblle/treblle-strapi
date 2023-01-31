@@ -25,7 +25,6 @@ module.exports = (config, { strapi }) => {
     const fieldsToMask = generateFieldsToMask(additionalFieldsToMask)
     const maskedRequestPayload = maskSensitiveValues(requestPayload, fieldsToMask)
     const protocol = `${ctx.request.protocol.toUpperCase()}/${ctx.request.req.httpVersion}`
-    console.log(fieldsToMask)
 
     let maskedResponseBody
     try {
@@ -91,7 +90,6 @@ module.exports = (config, { strapi }) => {
         errors,
       },
     }
-    console.log(JSON.stringify(trebllePayload, null, 2))
     try {
       sendPayloadToTreblle(trebllePayload, apiKey)
     } catch (error) {
