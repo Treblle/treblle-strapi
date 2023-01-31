@@ -20,8 +20,8 @@ module.exports = (config, { strapi }) => {
     const requestStartTime = process.hrtime()
     let errors = []
     await next()
-    const { body, params, query } = ctx.request
-    const requestPayload = { ...body, ...params, ...query }
+    const { body, query } = ctx.request
+    const requestPayload = { ...body, ...query }
     const fieldsToMask = generateFieldsToMask(additionalFieldsToMask)
     const maskedRequestPayload = maskSensitiveValues(requestPayload, fieldsToMask)
     const protocol = `${ctx.request.protocol.toUpperCase()}/${ctx.request.req.httpVersion}`
@@ -90,6 +90,8 @@ module.exports = (config, { strapi }) => {
         errors,
       },
     }
-    sendPayloadToTreblle(trebllePayload, apiKey)
+    console.log(JSON.stringify(trebllePayload, null, 2))
+    const response = await sendPayloadToTreblle(trebllePayload, apiKey)
+    console.log(response)
   }
 }
