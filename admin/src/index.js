@@ -1,10 +1,10 @@
-import { prefixPluginTranslations } from '@strapi/helper-plugin';
-import pluginPkg from '../../package.json';
-import pluginId from './pluginId';
-import Initializer from './components/Initializer';
-import PluginIcon from './components/PluginIcon';
+import { prefixPluginTranslations } from '@strapi/helper-plugin'
+import pluginPkg from '../../package.json'
+import pluginId from './pluginId'
+import Initializer from './components/Initializer'
+import PluginIcon from './components/PluginIcon'
 
-const name = pluginPkg.strapi.name;
+const name = pluginPkg.strapi.name
 
 export default {
   register(app) {
@@ -16,9 +16,9 @@ export default {
         defaultMessage: name,
       },
       Component: async () => {
-        const component = await import(/* webpackChunkName: "[request]" */ './pages/App');
+        const component = await import(/* webpackChunkName: "[request]" */ './pages/App')
 
-        return component;
+        return component
       },
       permissions: [
         // Uncomment to set the permissions of the plugin here
@@ -27,13 +27,13 @@ export default {
         //   subject: null,
         // },
       ],
-    });
+    })
     app.registerPlugin({
       id: pluginId,
       initializer: Initializer,
       isReady: false,
       name,
-    });
+    })
   },
 
   bootstrap(app) {},
@@ -47,17 +47,17 @@ export default {
             return {
               data: prefixPluginTranslations(data, pluginId),
               locale,
-            };
+            }
           })
           .catch(() => {
             return {
               data: {},
               locale,
-            };
-          });
+            }
+          })
       })
-    );
+    )
 
-    return Promise.resolve(importedTrads);
+    return Promise.resolve(importedTrads)
   },
-};
+}
