@@ -1,0 +1,43 @@
+{
+  "name": "@treblle/strapi",
+  "version": "0.0.1",
+  "description": "Treblle SDK for Strapi",
+  "strapi": {
+    "name": "treblle",
+    "description": "Send Strapi API requests and errors to Treblle.",
+    "kind": "plugin",
+    "displayName": "Treblle"
+  },
+  "scripts": {
+    "lint": "npx prettier --check .",
+    "lint:fix": "npx prettier --write .",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "@treblle/utils": "^0.1.5"
+  },
+  "author": {
+    "name": "Kelvin Omereshone"
+  },
+  "maintainers": [
+    {
+      "name": "Treblle"
+    },
+    {
+      "name": "Kelvin Omereshone"
+    }
+  ],
+  "engines": {
+    "node": ">=14.19.1 <=18.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.0",
+    "prettier": "2.8.3"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  }
+}
