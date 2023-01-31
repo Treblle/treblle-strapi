@@ -1,0 +1,30 @@
+{
+  "name": "@treblle/strapi",
+  "version": "0.0.1",
+  "description": "Treblle SDK for Strapi",
+  "strapi": {
+    "name": "treblle",
+    "description": "Send Strapi API requests and errors to Treblle.",
+    "kind": "plugin",
+    "displayName": "Treblle"
+  },
+  "dependencies": {
+    "@treblle/utils": "^0.1.5"
+  },
+  "author": {
+    "name": "Kelvin Omereshone"
+  },
+  "maintainers": [
+    {
+      "name": "Treblle"
+    },
+    {
+      "name": "Kelvin Omereshone"
+    }
+  ],
+  "engines": {
+    "node": ">=14.19.1 <=18.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}
