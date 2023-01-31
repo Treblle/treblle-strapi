@@ -9,19 +9,19 @@ const { version: sdkVersion } = require('../../package.json')
 
 module.exports = (config, { strapi }) => {
   return async (ctx, next) => {
-    const { apiKey, projectId, routesToIgnore, additionalFieldsToMask } =
+    const { apiKey, projectId, routesToMonitor, additionalFieldsToMask } =
       strapi.config.get('plugin.treblle')
 
     const [_, path] = ctx.request.url.split('/')
-    if (routesToIgnore.includes(path)) {
+    if (!routesToMonitor.includes(path)) {
       return next()
     }
 
     const requestStartTime = process.hrtime()
     let errors = []
     await next()
-    const { body, params, query } = ctx.request
-    const requestPayload = { ...body, ...params, ...query }
+    const { body, query } = ctx.request
+    const requestPayload = { ...body, ...query }
     const fieldsToMask = generateFieldsToMask(additionalFieldsToMask)
     const maskedRequestPayload = maskSensitiveValues(requestPayload, fieldsToMask)
     const protocol = `${ctx.request.protocol.toUpperCase()}/${ctx.request.req.httpVersion}`
@@ -57,7 +57,7 @@ module.exports = (config, { strapi }) => {
       sdk: 'strapi',
       data: {
         server: {
-          timezone: Intl.DateTimeFormat().resolvedOptions.timezone,
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
           os: {
             name: os.platform(),
             release: os.release(),
@@ -75,14 +75,14 @@ module.exports = (config, { strapi }) => {
           timestamp: new Date().toISOString().replace('T', ' ').substr(0, 19),
           ip: ctx.request.ip,
           url: `${ctx.request.protocol}://${ctx.request.get('host')}${ctx.request.originalUrl}`,
-          user_agent: ctx.request.header['user-agent'],
+          user_agent: ctx.request.headers['user-agent'],
           method: ctx.request.method,
           headers: maskSensitiveValues(ctx.request.headers, fieldsToMask),
           body: maskedRequestPayload || null,
         },
         response: {
           headers: maskSensitiveValues(ctx.response.headers, fieldsToMask),
-          code: ctx.response.code,
+          code: ctx.response.status,
           size: ctx.response.length || null,
           load_time: getRequestDuration(requestStartTime),
           body: maskedResponseBody || null,
@@ -90,6 +90,10 @@ module.exports = (config, { strapi }) => {
         errors,
       },
     }
-    sendPayloadToTreblle(trebllePayload, apiKey)
+    try {
+      sendPayloadToTreblle(trebllePayload, apiKey)
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
