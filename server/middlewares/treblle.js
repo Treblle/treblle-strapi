@@ -77,11 +77,11 @@ module.exports = (config, { strapi }) => {
           url: `${ctx.request.protocol}://${ctx.request.get('host')}${ctx.request.originalUrl}`,
           user_agent: ctx.request.header['user-agent'],
           method: ctx.request.method,
-          headers: maskSensitiveValues(ctx.request.headers),
+          headers: maskSensitiveValues(ctx.request.headers, fieldsToMask),
           body: maskedRequestPayload || null,
         },
         response: {
-          headers: maskSensitiveValues(ctx.response.headers),
+          headers: maskSensitiveValues(ctx.response.headers, fieldsToMask),
           code: ctx.response.code,
           size: ctx.response.length || null,
           load_time: getRequestDuration(requestStartTime),

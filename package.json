@@ -1,6 +1,6 @@
 {
   "name": "@treblle/strapi",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Treblle SDK for Strapi",
   "strapi": {
     "name": "treblle",
