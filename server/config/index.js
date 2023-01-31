@@ -5,7 +5,7 @@ module.exports = {
     apiKey: env('TREBLLE_API_KEY'),
     projectId: env('TREBLLE_PROJECT_ID'),
     additionalFieldsToMask: [],
-    routesToIgnore: ['admin', 'content-type-builder', 'content-manager'],
+    routesToMonitor: ['api'],
   }),
   validator: (config) => {
     if (typeof config.apiKey !== 'string') {

@@ -9,11 +9,11 @@ const { version: sdkVersion } = require('../../package.json')
 
 module.exports = (config, { strapi }) => {
   return async (ctx, next) => {
-    const { apiKey, projectId, routesToIgnore, additionalFieldsToMask } =
+    const { apiKey, projectId, routesToMonitor, additionalFieldsToMask } =
       strapi.config.get('plugin.treblle')
 
     const [_, path] = ctx.request.url.split('/')
-    if (routesToIgnore.includes(path)) {
+    if (!routesToMonitor.includes(path)) {
       return next()
     }
 
