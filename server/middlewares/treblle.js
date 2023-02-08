@@ -3,8 +3,8 @@ const {
   generateFieldsToMask,
   maskSensitiveValues,
   getRequestDuration,
+  generateTrebllePayload,
 } = require('@treblle/utils')
-const os = require('os')
 const { version: sdkVersion } = require('../../package.json')
 
 module.exports = (config, { strapi }) => {
@@ -50,29 +50,18 @@ module.exports = (config, { strapi }) => {
       })
     }
 
-    const trebllePayload = {
-      api_key: apiKey,
-      project_id: projectId,
-      version: sdkVersion,
-      sdk: 'strapi',
-      data: {
+    const trebllePayload = generateTrebllePayload(
+      {
+        api_key: apiKey,
+        project_id: projectId,
+        version: sdkVersion,
+        sdk: 'strapi',
+      },
+      {
         server: {
-          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-          os: {
-            name: os.platform(),
-            release: os.release(),
-            architecture: os.arch(),
-          },
-          software: null,
-          signature: null,
           protocol,
         },
-        language: {
-          name: 'node',
-          version: process.version,
-        },
         request: {
-          timestamp: new Date().toISOString().replace('T', ' ').substr(0, 19),
           ip: ctx.request.ip,
           url: `${ctx.request.protocol}://${ctx.request.get('host')}${ctx.request.originalUrl}`,
           user_agent: ctx.request.headers['user-agent'],
@@ -88,8 +77,9 @@ module.exports = (config, { strapi }) => {
           body: maskedResponseBody || null,
         },
         errors,
-      },
-    }
+      }
+    )
+
     try {
       sendPayloadToTreblle(trebllePayload, apiKey)
     } catch (error) {
