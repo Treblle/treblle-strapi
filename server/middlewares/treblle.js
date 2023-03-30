@@ -4,6 +4,7 @@ const {
   maskSensitiveValues,
   getRequestDuration,
   generateTrebllePayload,
+  getResponsePayload,
 } = require('@treblle/utils')
 const { version: sdkVersion } = require('../../package.json')
 
@@ -26,28 +27,13 @@ module.exports = (config, { strapi }) => {
     const maskedRequestPayload = maskSensitiveValues(requestPayload, fieldsToMask)
     const protocol = `${ctx.request.protocol.toUpperCase()}/${ctx.request.req.httpVersion}`
 
-    let maskedResponseBody
-    try {
-      let originalResponseBody = ctx.response.body
-      if (Buffer.isBuffer(originalResponseBody)) {
-        originalResponseBody = originalResponseBody.toString('utf8')
-      }
+    const { payload: maskedResponseBody, error: invalidResponseBodyError } = getResponsePayload(
+      ctx.body,
+      fieldsToMask
+    )
 
-      if (typeof originalResponseBody === 'string') {
-        let parsedResponseBody = JSON.parse(originalResponseBody)
-        maskedResponseBody = maskSensitiveValues(parsedResponseBody, fieldsToMask)
-      } else if (typeof originalResponseBody === 'object') {
-        maskedResponseBody = maskSensitiveValues(originalResponseBody, fieldsToMask)
-      }
-    } catch {
-      // if we can't parse the body we'll leave it empty and set an error
-      errors.push({
-        source: 'onShutdown',
-        type: 'INVALID_JSON',
-        message: 'Invalid JSON format',
-        file: null,
-        line: null,
-      })
+    if (invalidResponseBodyError) {
+      errors.push(invalidResponseBodyError)
     }
 
     const trebllePayload = generateTrebllePayload(
