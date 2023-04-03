@@ -1,6 +1,6 @@
 {
   "name": "@treblle/strapi",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Treblle SDK for Strapi",
   "strapi": {
     "name": "treblle",
@@ -32,6 +32,14 @@
     "npm": ">=6.0.0"
   },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Treblle/treblle-strapi.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Treblle/treblle-strapi/issues"
+  },
+  "homepage": "https://github.com/Treblle/treblle-strapi#readme",
   "devDependencies": {
     "husky": "^8.0.3",
     "lint-staged": "^13.1.0",
