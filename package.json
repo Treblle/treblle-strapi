@@ -14,7 +14,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@treblle/utils": "^0.1.10"
+    "@treblle/utils": "^0.1.12"
   },
   "author": {
     "name": "Kelvin Omereshone"
