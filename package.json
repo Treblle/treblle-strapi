@@ -1,6 +1,6 @@
 {
   "name": "@treblle/strapi",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Treblle SDK for Strapi",
   "strapi": {
     "name": "treblle",
@@ -14,7 +14,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@treblle/utils": "^0.1.10"
+    "@treblle/utils": "^0.1.12"
   },
   "author": {
     "name": "Kelvin Omereshone"
