@@ -1,6 +1,6 @@
 {
   "name": "@treblle/strapi",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Treblle SDK for Strapi",
   "strapi": {
     "name": "treblle",
@@ -14,7 +14,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@treblle/utils": "^0.1.12"
+    "@treblle/utils": "^0.1.13"
   },
   "author": {
     "name": "Kelvin Omereshone"
@@ -42,7 +42,7 @@
   "homepage": "https://github.com/Treblle/treblle-strapi#readme",
   "devDependencies": {
     "husky": "^8.0.3",
-    "lint-staged": "^13.1.0",
+    "lint-staged": "^13.2.3",
     "prettier": "2.8.3"
   },
   "lint-staged": {
